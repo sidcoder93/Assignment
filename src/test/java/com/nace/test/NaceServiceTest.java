@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 public class NaceServiceTest {
 
@@ -52,9 +55,17 @@ public class NaceServiceTest {
     public void givenOrderThenReturnDetailsOfOrder()
     {
 
-        Mockito.when(naceRepository.findById(398481L)).thenReturn(Optional.ofNullable(nace1));
+        when(naceRepository.findById(398481L)).thenReturn(Optional.ofNullable(nace1));
         assert(naceService.getNaceDetails(nace1.getOrderNo())).equals(nace1);
 
+    }
+
+    @Test
+    void givenOrderToSaveDetails() {
+
+        when(naceRepository.save(any())).thenReturn(nace1);
+        naceService.saveNaceDetails(nace1);
+        verify(naceRepository,times(1)).save(any());
     }
 
 
