@@ -41,10 +41,12 @@ public class NaceController {
    }
 
     @PostMapping("/")
-    public Nace putNaceDetails(@RequestBody Nace nace)
+    public ResponseEntity<Nace> putNaceDetails(@RequestBody Nace nace)
     {
         log.info("Inside putNaceDetails of Nace Controller");
-        return naceService.saveNaceDetails(nace);
+         Nace naceDetails =naceService.saveNaceDetails(nace);
+
+         return new ResponseEntity<>(naceDetails, HttpStatus.CREATED);
     }
 
 }
